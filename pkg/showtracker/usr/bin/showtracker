@@ -145,11 +145,11 @@ def ask_for_int(label, default=None):
 def print_record(row):
     kind = row['kind']
     if kind == 'show':
-        te = row.get('total_episodes')
+        te = row['total_episodes']
         te_str = f" / {te}" if te else ""
-        print(f"{row['name']} - S{row['season']}E{row['episode']}{te_str}  (notes: {row.get('notes') or '-'})")
+        print(f"{row['name']} - S{row['season']}E{row['episode']}{te_str}  (notes: {row['notes'] or '-'})")
         # seasons JSON can hold per-season notes or metadata
-        seasons = row.get('seasons')
+        seasons = row['seasons']
         if seasons:
             try:
                 sdata = json.loads(seasons)
@@ -158,7 +158,7 @@ def print_record(row):
             except Exception:
                 pass
     else:
-        print(f"{row['name']} - C{row['chapter']}  (notes: {row.get('notes') or '-'})")
+        print(f"{row['name']} - C{row['chapter']}  (notes: {row['notes'] or '-'})")
 
 
 def add_item(args):
@@ -249,8 +249,8 @@ def import_csv(args):
     with open(path, newline='', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         for row in reader:
-            kind = row.get('kind') or 'show'
-            name = row.get('name')
+            kind = row['kind'] or 'show'
+            name = row['name']
             if not name:
                 continue
             # normalize numeric fields
@@ -259,13 +259,13 @@ def import_csv(args):
                     return int(v) if v not in (None,'') else None
                 except Exception:
                     return None
-            season = to_int(row.get('season'))
-            episode = to_int(row.get('episode'))
-            chapter = to_int(row.get('chapter'))
-            total_episodes = to_int(row.get('total_episodes'))
-            seasons = row.get('seasons')
-            notes = row.get('notes')
-            updated_at = row.get('updated_at') or datetime.utcnow().isoformat()
+            season = to_int(row['season'])
+            episode = to_int(row['episode'])
+            chapter = to_int(row['chapter'])
+            total_episodes = to_int(row['total_episodes'])
+            seasons = row['seasons']
+            notes = row['notes']
+            updated_at = row['updated_at'] or datetime.utcnow().isoformat()
             # upsert by case-insensitive name
             cur.execute("SELECT id FROM items WHERE LOWER(name)=?", (name.lower(),))
             existing = cur.fetchone()

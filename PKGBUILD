@@ -1,10 +1,10 @@
 # Maintainer: ShowTracker <nobody@example.com>
 pkgname=showtracker
 pkgver=0.1.0
-pkgrel=1
+pkgrel=1.1
 pkgdesc="CLI to track TV shows (season/episode) and books (chapter)"
 arch=('any')
-url=""
+url="https://github.com/speedxo/showtracker-py"
 license=('MIT')
 depend=('python')
 makedepends=('python')

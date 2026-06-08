@@ -3,12 +3,12 @@
 pkgname = showtracker
 pkgbase = showtracker
 xdata = pkgtype=pkg
-pkgver = 0.1.0-1
+pkgver = 0.1.0-1.1
 pkgdesc = CLI to track TV shows (season/episode) and books (chapter)
-url = 
-builddate = 1780934767
+url = https://github.com/speedxo/showtracker-py
+builddate = 1780941475
 packager = Unknown Packager
-size = 24390
+size = 24846
 arch = any
 license = MIT
 makedepend = python
