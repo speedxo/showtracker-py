@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61","wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "showtracker"
+version = "0.1.0"
+description = "CLI to track TV shows (season/episode) and books (chapter)"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [ { name = "ShowTracker" } ]
+requires-python = ">=3.8"
+dependencies = []
+
+[project.scripts]
+showtracker = "showtracker:main"
