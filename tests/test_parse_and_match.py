@@ -22,7 +22,7 @@ def test_find_matches_partial_and_fuzzy(tmp_path):
     # use schema from module to create table with expected columns
     conn.executescript(SCHEMA)
     cur = conn.cursor()
-    now = datetime.utcnow().isoformat()
+    now = datetime.datetime.now(datetime.UTC)
     cur.execute("""
         INSERT INTO items(kind,name,season,episode,chapter,total_episodes,seasons,notes,updated_at)
         VALUES(?,?,?,?,?,?,?,?,?)

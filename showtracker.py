@@ -177,7 +177,7 @@ def add_item(args):
         if e is None: e = ask_for_int('Episode', default=1)
     if kind == 'book' and c is None:
         c = ask_for_int('Chapter', default=1)
-    now = datetime.utcnow().isoformat()
+    now = datetime.datetime.now(datetime.UTC)
     try:
         cur.execute("INSERT INTO items(kind,name,season,episode,chapter,total_episodes,seasons,notes,updated_at) VALUES(?,?,?,?,?,?,?,?,?)",
                     (kind, name, s, e, c, te, seasons_json, args.notes, now))
@@ -213,7 +213,7 @@ def set_item(args):
         e = ask_for_int('Episode', default=episode or 1)
     if kind == 'book' and c is None:
         c = ask_for_int('Chapter', default=chapter or 1)
-    now = datetime.utcnow().isoformat()
+    now = datetime.datetime.now(datetime.UTC)
     cur.execute("UPDATE items SET season=?,episode=?,chapter=?,total_episodes=?,seasons=?,notes=?,updated_at=? WHERE id=?",
                 (s or season, e or episode, c or chapter, total_episodes, seasons, args.notes, now, _id))
     conn.commit(); conn.close(); print('Updated.')
@@ -265,7 +265,7 @@ def import_csv(args):
             total_episodes = to_int(row['total_episodes'])
             seasons = row['seasons']
             notes = row['notes']
-            updated_at = row['updated_at'] or datetime.utcnow().isoformat()
+            updated_at = row['updated_at'] or datetime.datetime.now(datetime.UTC)
             # upsert by case-insensitive name
             cur.execute("SELECT id FROM items WHERE LOWER(name)=?", (name.lower(),))
             existing = cur.fetchone()
@@ -311,7 +311,7 @@ def shorthand_progress(name, prog, new_season_flag=False):
                     if e is None: e = ask_for_int('Episode', default=1)
                 else:
                     if c is None: c = ask_for_int('Chapter', default=1)
-                now = datetime.utcnow().isoformat()
+                now = datetime.datetime.now(datetime.UTC)
                 try:
                     cur.execute("INSERT INTO items(kind,name,season,episode,chapter,notes,updated_at) VALUES(?,?,?,?,?,?,?)",
                                 (kind, name, s, e, c, None, now))
@@ -337,7 +337,7 @@ def shorthand_progress(name, prog, new_season_flag=False):
                 if e is None: e = ask_for_int('Episode', default=1)
             else:
                 if c is None: c = ask_for_int('Chapter', default=1)
-            now = datetime.utcnow().isoformat()
+            now = datetime.datetime.now(datetime.UTC)
             try:
                 cur.execute("INSERT INTO items(kind,name,season,episode,chapter,notes,updated_at) VALUES(?,?,?,?,?,?,?)",
                             (kind, name, s, e, c, None, now))
@@ -352,7 +352,7 @@ def shorthand_progress(name, prog, new_season_flag=False):
     # new season flag
     if prog and prog.strip().lower() in ('ns','s+','newseason','new-season','n'):
         new_season_flag = True
-    now = datetime.utcnow().isoformat()
+    now = datetime.datetime.now(datetime.UTC)
     if kind == 'show':
         if new_season_flag:
             season = (season or 0) + 1
@@ -384,13 +384,13 @@ def shorthand_progress(name, prog, new_season_flag=False):
             season = ask_for_int('Season', default=season)
             episode = ask_for_int('Episode', default=episode)
             notes = input('Notes (empty to keep): ').strip() or notes
-            now = datetime.utcnow().isoformat()
+            now = datetime.datetime.now(datetime.UTC)
             cur.execute("UPDATE items SET season=?,episode=?,notes=?,updated_at=? WHERE id=?", (season, episode, notes, now, _id))
             conn.commit(); cur.execute("SELECT id, kind, name, season, episode, chapter, notes FROM items WHERE id=?", (_id,)); print_record(cur.fetchone())
         else:
             chapter = ask_for_int('Chapter', default=chapter)
             notes = input('Notes (empty to keep): ').strip() or notes
-            now = datetime.utcnow().isoformat()
+            now = datetime.datetime.now(datetime.UTC)
             cur.execute("UPDATE items SET chapter=?,notes=?,updated_at=? WHERE id=?", (chapter, notes, now, _id))
             conn.commit(); cur.execute("SELECT id, kind, name, season, episode, chapter, notes FROM items WHERE id=?", (_id,)); print_record(cur.fetchone())
 
@@ -447,7 +447,7 @@ def show_item(args):
         else:
             if c is None:
                 c = ask_for_int('Chapter', default=1)
-        now = datetime.utcnow().isoformat()
+        now = datetime.datetime.now(datetime.UTC)
         try:
             cur.execute("INSERT INTO items(kind,name,season,episode,chapter,notes,updated_at) VALUES(?,?,?,?,?,?,?)",
                         (kind, args.name, s, e, c, None, now))
@@ -485,7 +485,7 @@ def show_item(args):
         else:
             if c is None:
                 c = ask_for_int('Chapter', default=1)
-        now = datetime.utcnow().isoformat()
+        now = datetime.datetime.now(datetime.UTC)
         try:
             cur.execute("INSERT INTO items(kind,name,season,episode,chapter,notes,updated_at) VALUES(?,?,?,?,?,?,?)",
                         (kind, args.name, s, e, c, None, now))
