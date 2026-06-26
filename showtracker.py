@@ -530,7 +530,7 @@ def parse_args(argv):
     p_export = sub.add_parser('export-csv'); p_export.add_argument('path', nargs='?', default='-'); p_export.set_defaults(func=export_csv)
     p_import = sub.add_parser('import-csv'); p_import.add_argument('path'); p_import.set_defaults(func=import_csv)
 
-    if not argv: p.print_help(); sys.exit(0)
+    if not argv or argv[0] in ('-h', '--help'): p.print_help(); sys.exit(0)
     known = {'add','set','list','show','rm','export-csv','import-csv'}
     if argv and argv[0] not in known:
         name = argv[0]

@@ -1,6 +1,6 @@
 # ShowTracker - minimal CLI series progress tracking tool.
 
-(I just wanted to see how much is possible with the free credits of copilot they give you in a day - turns out it's far more than this)
+(I just wanted to see how much is possible with the free credits of copilot they give you in a ~~day~~ month - turns out it's far more than this)
 
 ## Usage examples:
 ```sh
